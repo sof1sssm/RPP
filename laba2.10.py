@@ -1,21 +1,66 @@
-# Считываем произвольную строку с клавиатуры
-sequence = input("Введите произвольную строку: ")
+def capitalize_words(text):
+  """
+  Преобразует строку, делая первую букву каждого слова заглавной.
 
-# Преобразуем строку так, чтобы каждое слово начиналось с заглавной буквы
-transformed_sequence = ""
-count = 0
-for char in sequence:
-    if char != ' ' and count == 0:
-        transformed_sequence += char.upper()
-        count = 1
-    elif char != ' ' and count == 1:
-        transformed_sequence += char
-    elif char == ' ':
-        transformed_sequence += char
-        count = 0
+  Args:
+    text: исходная строка.
 
-# Выводим полученную строку
-print("Преобразованная строка:", transformed_sequence)
+  Returns:
+    строка, где каждое слово начинается с заглавной буквы.
+  """
+  # result: переменная, в которой будет храниться результат.
+  result = ''
+  # prev_char_is_space: флаг, который показывает, был ли предыдущий символ пробелом.
+  prev_char_is_space = True
+  # Цикл, который перебирает каждый символ в строке text.
+  for char in text:
+    # Если предыдущий символ был пробелом, то
+    if prev_char_is_space:
+    # Добавляем к результату первую букву слова в заглавном регистре.
+      result += char.title()
+    else:
+    # добавляем к результату текущий символ без изменений.
+      result += char
+    # обновляем флаг prev_char_is_space.
+    prev_char_is_space = char.isspace()
+    # возвращаем результат.
+  return result
+
+def count_transformations(text):
+  """
+  Подсчитывает количество преобразований в строке.
+
+  Args:
+    text: исходная строка.
+
+  Returns:
+    количество преобразований.
+  """
+  # count: переменная, в которой будет храниться количество преобразований.
+  count = 0
+  # флаг, который показывает, был ли предыдущий символ пробелом.
+  prev_char_is_space = True
+  # цикл, который перебирает каждый символ в строке text.
+  for char in text:
+    # если предыдущий символ был пробелом и текущий символ является буквой, то:
+    if prev_char_is_space and char.isalpha():
+      # увеличиваем счетчик преобразований на 1.
+      count += 1
+      # обновляем флаг
+    prev_char_is_space = char.isspace()
+  return count
+
+# Считываем строку с клавиатуры
+text = input("Введите строку: ")
+
+# Преобразуем строку
+capitalized_text = capitalize_words(text)
+
+# Выводим результат
+print(f"Преобразованная строка: {capitalized_text}")
+
+# Подсчитываем количество преобразований
+count = count_transformations(text)
 
 # Выводим количество преобразований
-print("Количество преобразований:", transformed_sequence.count(' '))
+print(f"Количество преобразований: {count}")
